@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ScalingUp": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}
