@@ -5,17 +5,11 @@ using Ers;
 namespace ScalingUp
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct Channel : IDataComponent
+    internal struct ProductTracker : IDataComponent
     {
-        public Entity FromEntity;
-        public Entity ToEntity;
-
-        public bool InputOpen = true;
-        public bool OutputOpen = true;
-
         public ulong Seen = 0;
 
-        public Channel()
+        public ProductTracker()
         {
             // C# requires a constructor here
         }

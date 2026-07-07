@@ -10,19 +10,24 @@ namespace ExpandingTheModel
 
             Logger.SetLogLevel(LogLevel.Info);
 
-            ModelContainer modelContainer = ModelContainer.CreateModelContainer();
-            modelContainer.SetPrecision(1_000_000);
-            modelContainer.SetSeed(1);
+            // Register the custom components
+            ComponentRegistry<SourceBehavior>.Register();
+            ComponentRegistry<QueueBehavior>.Register();
+            ComponentRegistry<ServerBehavior>.Register();
+            ComponentRegistry<SinkBehavior>.Register();
+            ComponentRegistry<Product>.Register();
+
+            // Register the local events
+            LocalEventRegistry<GenerateProductEvent>.Register();
+            LocalEventRegistry<ServerProcessEvent>.Register();
+
+            ModelContainer modelContainer = ModelContainer.Create();
+            modelContainer.Precision = 1_000_000;
+            modelContainer.Seed = 1;
             Simulator sim = modelContainer.AddSimulator("Sim1", SimulatorType.DiscreteEvent);
             sim.EnterSubModel();
 
-            SubModel subModel = SubModel.GetSubModel();
-            // Register the custom components
-            subModel.AddComponentType<SourceBehavior>();
-            subModel.AddComponentType<QueueBehavior>();
-            subModel.AddComponentType<ServerBehavior>();
-            subModel.AddComponentType<SinkBehavior>();
-            subModel.AddComponentType<Product>();
+            SubModel subModel = SubModel.Get();
 
             // Create the simulation objects
             Entity sourceEntity = subModel.CreateEntity("Source");
@@ -45,10 +50,10 @@ namespace ExpandingTheModel
 
             sim.ExitSubModel();
 
-            ulong endTime = 3600 * modelContainer.GetPrecision();
+            ulong endTime = 3600 * modelContainer.Precision;
             while (modelContainer.CurrentTime < endTime)
             {
-                modelContainer.Update(modelContainer.GetPrecision());
+                modelContainer.Update(modelContainer.Precision);
             }
             Logger.Info($"Sink received {sink.Received} products");
 

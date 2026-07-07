@@ -1,14 +1,17 @@
 ﻿using System;
 using Ers;
 
-namespace ReusableComponents
+namespace ExpandingTheModel
 {
     internal class SinkBehavior : ScriptBehaviorComponent
     {
+        public ulong Received = 0;
+        public bool InputOpen = true;
+
         public override void OnEntered(Entity newChild)
         {
-            ConnectedEntity.GetComponent<Channel>().Value.Seen++;
-            SubModel.GetSubModel().DestroyEntity(newChild);
+            Received++;
+            SubModel.Get().DestroyEntity(newChild);
         }
     }
 }
