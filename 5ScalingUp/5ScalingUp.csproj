@@ -6,6 +6,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Ers" Version="0.7.1" />
+    <PackageReference Include="Ers" Version="0.7.2" />
   </ItemGroup>
 </Project>
